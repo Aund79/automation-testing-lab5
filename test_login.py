@@ -3,7 +3,7 @@ from playwright.sync_api import Page, expect
 
 BASE_URL = "https://www.saucedemo.com/"
 # В заданиях 7 и 11 временно меняем inventory.html на incorrect.html.
-EXPECTED_INVENTORY_URL = "https://www.saucedemo.com/inventory.html"
+EXPECTED_INVENTORY_URL = "https://www.saucedemo.com/incorrect.html"
 
 
 def test_login_page_is_displayed(page: Page):
