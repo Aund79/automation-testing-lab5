@@ -1,0 +1,51 @@
+name: Automated UI Tests
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v6
+
+      - name: Set up Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install -r requirements.txt
+
+      - name: Install Playwright browser
+        run: python -m playwright install --with-deps chromium
+
+      - name: Run automated tests
+        run: >-
+          python -m pytest -v test_login.py
+          --tracing retain-on-failure
+          --screenshot on
+          --full-page-screenshot
+          --junitxml=reports/results.xml
+          --html=reports/report.html
+          --self-contained-html
+
+      - name: Save test reports
+        if: always()
+        uses: actions/upload-artifact@v5
+        with:
+          name: test-results-${{ github.run_number }}
+          path: |
+            reports/
+            test-results/
+          retention-days: 14
