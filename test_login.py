@@ -7,7 +7,7 @@ EXPECTED_INVENTORY_URL = "https://www.saucedemo.com/inventory.html"
 
 
 def test_login_page_is_displayed(page: Page):
-    # Задание 2: проверяем три элемента формы входа.
+    # Задание 2. Проверяем форму входа.
     page.goto(BASE_URL)
     expect(page.locator('[data-test="username"]')).to_be_visible()
     expect(page.locator('[data-test="password"]')).to_be_visible()
@@ -15,7 +15,7 @@ def test_login_page_is_displayed(page: Page):
 
 
 def test_successful_login(page: Page):
-    # Задание 3: после правильного входа должен открыться каталог.
+    # Задание 3. Вход с правильными данными.
     page.goto(BASE_URL)
     page.locator('[data-test="username"]').fill("standard_user")
     page.locator('[data-test="password"]').fill("secret_sauce")
@@ -26,7 +26,7 @@ def test_successful_login(page: Page):
 
 
 def test_add_product_to_cart(page: Page):
-    # Задания 4 и 5 повторяют один сценарий, поэтому функция здесь одна.
+    # Задания 4 и 5 в методичке одинаковые, поэтому тест один.
     page.goto(BASE_URL)
     page.locator('[data-test="username"]').fill("standard_user")
     page.locator('[data-test="password"]').fill("secret_sauce")
@@ -36,7 +36,7 @@ def test_add_product_to_cart(page: Page):
     page.locator('[data-test="add-to-cart-sauce-labs-backpack"]').click()
     expect(page.locator('[data-test="shopping-cart-badge"]')).to_have_text("1")
 
-    # Дополнительно открываем корзину и проверяем сам добавленный товар.
+    # Открываем корзину и проверяем добавленный товар.
     page.locator('[data-test="shopping-cart-link"]').click()
     expect(page).to_have_url(BASE_URL + "cart.html")
     cart_item = page.locator('[data-test="cart-list"]').locator(
@@ -50,7 +50,7 @@ def test_add_product_to_cart(page: Page):
 
 
 def test_login_with_invalid_password(page: Page):
-    # Задание 6: неверный пароль должен вызвать понятную ошибку.
+    # Задание 6. Вход с неправильным паролем.
     page.goto(BASE_URL)
     page.locator('[data-test="username"]').fill("standard_user")
     page.locator('[data-test="password"]').fill("wrong_password")
